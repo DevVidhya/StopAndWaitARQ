@@ -1,0 +1,156 @@
+***********************************
+ > qt - Missing
+   >> Didn't find: Qt (version 4 or 5); install it from packages, or download from https://info.qt.io/download-qt-for-application-development
+   >> Try: "sudo apt-get install qt5-dev-tools libqt5-dev", if you have sudo rights.
+
+Didn't work, package name is qt5-default (maybe installs too much, even)
+
+************************************
+ > setuptools - Missing
+   >> The python-setuptools package is not installed, try to install it.
+   >> Try: "sudo apt-get install python-setuptools", if you have sudo rights.
+
+Installing python-setuptools doesn't remove the warning
+python-setuptools is already the newest version (39.0.1-2).
+
+Installing python3-setuptools doesn't remove the warning
+python3-setuptools is already the newest version (39.0.1-2).
+
+"pip install -U setuptools" fixes the problem. No idea of the difference w.r.t. the packaged version
+
+**************************************
+This is the list of things I did install:
+    3  apt install mercurial
+    5  apt install git
+    7  apt install libclang-dev
+    8  apt install python-setuptools
+    9  apt install g++
+   10  apt install libxml2-dev
+   11  apt install python-dev
+   17  apt install qt5-default
+   19  apt install python3-setuptools
+   35  apt install python-pip
+   36  apt install python3-pip
+   38  pip install -U setuptools
+
+**************************************
+
+Did not bother about missing pygoocanvas and pygraphviz
+
+In the source directory there are two pygccxml directories:
+- pygccxml
+- pygccxml-1.9.1
+
+WHY ?
+They seems to be identical.
+
+$ diff -r pygccxml pygccxml-1.9.1/
+Only in pygccxml: .git
+
+************************************** Build phase
+ >> Building nsc-dev - Problem
+ > Problem: Optional dependency, module "nsc-dev" failed
+
+Does not say what's wrong, and bake show didn't warn about issues.
+
+ >> Building click-dev - Problem
+   >> Unavailable building tool for module click-dev, install autotools
+
+Why bake show didn't say it before ?
+
+ >> Building castxml - Problem
+   >> Unavailable building tool for module castxml, install cmake
+
+Same as before, cmake wasn't listed in bake show
+
+ # apt install cmake automake autoconf
+
+***************************************
+
+pecos@pecos-VirtualBox:~/workspace/bake$ ./bake.py build
+ >> Building nsc-dev - Problem
+ > Problem: Optional dependency, module "nsc-dev" failed
+   This may reduce the  functionality of the final build.
+   However, bake will continue since "nsc-dev" is not an essential dependency.
+   For more information call bake with -v or -vvv, for full verbose mode.
+
+ >> Building BRITE - OK
+ >> Building click-dev - OK
+ >> Building netanim - OK
+ >> Building openflow-dev - OK
+ >> Building castxml - Problem
+ > Problem: Optional dependency, module "castxml" failed
+   This may reduce the  functionality of the final build.
+   However, bake will continue since "castxml" is not an essential dependency.
+   For more information call bake with -v or -vvv, for full verbose mode.
+
+The error (-vvv) seems to be:
+
+pecos@pecos-VirtualBox:~/workspace/bake$ ./bake.py build -vvv -o castxml
+ >> Building castxml -
+    > mkdir -p /home/pecos/workspace/bake/build/bin
+ mkdir /home/pecos/workspace/bake/source/castxml/objdir dir=/home/pecos/workspace/bake/source/castxml
+mkdir: cannot create directory ‘/home/pecos/workspace/bake/source/castxml/objdir’: File exists
+ cmake /home/pecos/workspace/bake/source/castxml -DCMAKE_INSTALL_PREFIX:PATH=/home/pecos/workspace/bake/build dir=/home/pecos/workspace/bake/source/castxml/objdir
+CMake Error at CMakeLists.txt:95 (find_package):
+  By not providing "FindLLVM.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "LLVM", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "LLVM" with any of
+  the following names:
+
+    LLVMConfig.cmake
+    llvm-config.cmake
+
+  Add the installation prefix of "LLVM" to CMAKE_PREFIX_PATH or set
+  "LLVM_DIR" to a directory containing one of the above files.  If "LLVM"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/pecos/workspace/bake/source/castxml/objdir/CMakeFiles/CMakeOutput.log".
+()
+ >> Building castxml - Problem
+   > Subprocess failed with error 1: ['cmake', '/home/pecos/workspace/bake/source/castxml', '-DCMAKE_INSTALL_PREFIX:PATH=/home/pecos/workspace/bake/build']
+
+
+Note that:
+
+pecos@pecos-VirtualBox:~/workspace/bake$ dpkg -l | grep llvm
+ii  libllvm6.0:amd64                           1:6.0-1ubuntu2                      amd64        Modular compiler and toolchain technologies, runtime library
+pecos@pecos-VirtualBox:~/workspace/bake$ dpkg -l | grep clang
+ii  libclang-6.0-dev                           1:6.0-1ubuntu2                      amd64        clang library - Development package
+ii  libclang-common-6.0-dev                    1:6.0-1ubuntu2                      amd64        clang library - Common development package
+ii  libclang-dev                               1:6.0-41~exp4                       amd64        clang library - Development package
+ii  libclang1-6.0:amd64                        1:6.0-1ubuntu2                      amd64        C interface to the clang library
+
+Nevertheless...
+
+  apt install llvm
+
+This does the trick. Castxml seems to be happy.
+As a side note, "bake.py build" doesn't seems to use incremental builds... why ?
+
+
+Now the final test...
+
+pecos@pecos-VirtualBox:~/workspace/bake/source/ns-3-dev$ ./waf --apiscan=sixlowpan --no32bit-scan
+Waf: Entering directory `/home/pecos/workspace/bake/source/ns-3-dev/build'
+Modules to scan:  ['sixlowpan']
+api-scan-gcc_LP64
+Traceback (most recent call last):
+  File "/home/pecos/workspace/bake/source/ns-3-dev/bindings/python/ns3modulescan-modular.py", line 7, in <module>
+    from pybindgen.castxmlparser import ModuleParser, PygenClassifier, PygenSection, WrapperWarning, find_declaration_from_name
+  File "/home/pecos/workspace/bake/source/pybindgen/pybindgen/castxmlparser.py", line 23, in <module>
+    import pygccxml
+ImportError: No module named pygccxml
+Waf: Leaving directory `/home/pecos/workspace/bake/source/ns-3-dev/build'
+Build failed
+ -> task in '' failed (exit status 1):
+	{task 139720010181776: apiscan_task sixlowpan-module.h -> modulegen__gcc_LP64.py}
+''
+
+Checking waf config confirms that apiscan is not enabled.
+Moreover... python-config is not found (but launching from the terminal works).

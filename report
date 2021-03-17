@@ -1,0 +1,426 @@
+Stop-and-Wait ARQ Technique for Repairing Frame and Acknowledgment Transmission along With Functionality to handle Delayed Acknowledgement
+
+Abstract - In sending data, a transmission will
+experience a damage or an error in the delivery
+process. Corrupted data will not be used for their
+intended purpose. Stop-and-Wait methods of
+Automatic Repeat Request is a method that is applied
+to correct errors in the process of sending the frame at
+the time of transmission. Data transmission is always
+done between the sending computer and the receiving
+computer. This method ensures that information is not
+lost due to packet drops and that the received packets
+in the correct order. This is the simplest type of
+method Automatic Repeat Request. Stop-and-Wait
+method will automatically fix corrupted data occurs in
+the transmission process. This method works by
+calculating the waiting time and timeout on both
+computers. If the data packets successfully sent and
+the recipient receives the data properly, then it will
+send an acknowledgment to the sender. It states that
+the transmission was not a failure or none of the bits
+sent change from 0 to 1 or vice verse. Timeout
+function is to record how long the computer wait if
+there is incongruity at the time of delivery. After a
+specified time limit runs out, either framed or
+acknowledgment will be sent again to correct the
+mistake.One extra functionality for handling delayed acknowledgements has been implemented.
+
+INTRODUCTION
+
+A. Need for error and flow control
+Errors in data transmission often occur in the world of computers that have been distributed. Errors sometimes occur due to disconnection of communication due to several factors. Some of them
+are the extinction of the electric current, the weak
+force between the network and the delivery can also
+occur on other technical factors. This influence can
+hinder the data at the time of delivery. Data
+transmission consists of frames and acknowledgments
+which are successfully sent. However, some bits is
+damaged or lost when the transmission progress.
+The method is often done to control errors in the data delivery in the Automatic Repeat Request. In this method, there is called the frame and acknowledgment. A frame is a data packet split into small data set while the acknowledgment is a
+confirmation from the receiving computer that the data
+packet is already well accepted, accepted with broken
+or even not at all acceptable. If the data received is not
+in accordance with the procedure, the recipient's
+computer will give a rebuttal that the packet should be
+sent back. Information is known by the sender's
+computer by way of non-receipt of acknowledgment
+from the receiving computer that the data sent was
+received perfectly. As settlement sending computer
+will attempt to retransmit the data in the form of
+pieces of a frame to the recipient's computer. This
+method is called Automatic Repeat Request the
+method of automatic data transmission repair damaged
+or missing. There are several methods that are owned
+by ARQ. This research will be conducted testing on
+one of the ARQ method is a method Stop-and-Wait.
+
+ TCP error and flow control
+Data communication requires at least two devices working together, one to send and the
+other to receive. Even such a basic arrangement requires a great deal of coordination
+for an intelligible exchange to occur. The most important responsibilities of the data
+link layer are flow control and error control. Collectively, these functions are known
+as data link control.
+Flow Control
+Flow control coordinates the amount of data that can be sent before receiving an acknowl-
+edgment and is one of the most important duties of the data link layer. In most protocols,
+flow control is a set of procedures that tells the sender how much data it can transmit
+before it must wait for an acknowledgment from the receiver. The flow of data must not
+be allowed to overwhelm the receiver. Any receiving device has a limited speed at which
+it can process incoming data and a limited amount of memory in which to store incom-
+ing data. The receiving device must be able to inform the sending device before those
+limits are reached and to request that the transmitting device send fewer frames or stop
+temporarily. Incoming data must be checked and processed before they can be used. The
+rate of such processing is often slower than the rate of transmission. For this reason,
+each receiving device has a block of memory, called a buffer, reserved for storing incom-
+ing data until they are processed. If the buffer begins to fill up, the receiver must be able
+to tell the sender to halt transmission until it is once again able to receive.
+
+Error control is both error detection and error correction. It allows the receiver to
+inform the sender of any frames lost or damaged in transmission and coordinates the
+retransmission of those frames by the sender. In the data link layer, the term error con-
+trol refers primarily to methods of error detection and retransmission. Error control in
+the data link layer is often implemented simply: Any time an error is detected in an
+exchange, specified frames are retransmitted. This process is called automatic repeat
+request (ARQ).Error control is both error detection and error correction. It allows the receiver to
+inform the sender of any frames lost or damaged in transmission and coordinates the
+retransmission of those frames by the sender. In the data link layer, the term error con-
+trol refers primarily to methods of error detection and retransmission. Error control in
+the data link layer is often implemented simply: Any time an error is detected in an
+exchange, specified frames are retransmitted. This process is called automatic repeat
+request (ARQ).
+
+
+B.Stop-And-Wait ARQ
+Our protocol, called the Stop-and-Wait Automatic Repeat Request (Stop-and-Wait ARQ), adds a simple error control mechanism to the Stop-and-Wait Protocol. Let us see how this protocol detects and corrects errors. To detect and correct corrupted frames, we need to add redundancy bits to our data frame. When the frame arrives at the receiver site, it is checked and if it is corrupted, it is silently discarded. The detection of errors in this protocol is manifested by the silence of the receiver. Lost frames are more difficult to handle than corrupted ones. In Stop-and-Wait protocols, there was no way to identify a frame. The received frame could be the correct one, or a duplicate, or a frame out of order. The solution is to number the frames. When the receiver receives a data frame that is out of order, this means that frames were either lost or duplicated. The corrupted and lost frames need to be resent in this protocol. If the receiver does not respond when there is an error, how can the sender know which frame to resend? To remedy this problem, the sender keeps a copy of the sent frame. At the same time, it starts
+a timer. If the timer expires and there is no ACK for the sent frame, the frame is resent, the copy is held, and the timer is restarted. Since the protocol uses the stop-and-wait mechanism, there is only one specific frame that needs an ACK even though several copies of the same frame can be in the network.
+
+
+C. Motivation:
+The motivation for this paper arised from the lack of proper mechanism in the previously implemented papers to handle delayed acknowledhements.
+Delayed acknowledgements may result due to different paths taken by packets due to congestion in the network. A receiver will not know how to handle a delayed acknowlegdement and get might confused.
+
+D. Contribution: 
+This paper contributes to the traditional Stop-And-Wait ARQ protocol by providing additional functionality to handle delayed acknowledgements received by the receiver by checking if it id the expected acknowledement. In case it isn't, the code is implemented in such a way that it will silently discard the delayed duplicate acknowledgement and continue functioning as it would in a normal situation.
+
+E. Paper Organisation:
+
+
+
+
+
+2.related work
+
+A. Previous works:
+
+1.Performance of Cognitive Stop-and-Wait Hybrid
+Automatic Repeat Request in the Face of
+Imperfect Sensing
+ATEEQ UR REHMAN, CHEN DONG, LIE-LIANG YANG, (Fellow, IEEE),
+AND LAJOS HANZO, (Fellow, IEEE)
+School of Electronics and Computer Science, University of Southampton, Southampton SO17 1BJ, U.K.
+Corresponding author: L. Hanzo (lh@ecs.soton.ac.uk)
+
+2.International Journal of Engineering Trends and Technology (IJETT) – Volume 38 Number 7- August 2016 ISSN: 2231-5381 http://www.ijettjournal.org Page 384 Stop-and-Wait ARQ Technique for RepairingFrame and Acknowledgment Transmission Zuhri Ramadhan1, Andysah Putera Utama Siahaan2 Faculty of Computer Science Universitas Pembangunan Panca Budi Jl. Jend. Gatot Subroto Km. 4,5 Sei Sikambing, 20122, Medan, Sumatera Utara, Indonesia
+
+3.Delay Analysis of the Stop-and-Wait ARQ Protocol
+over a Correlated Error Channel
+S. De Vuyst, S. Wittevrongel and H. Bruneel
+SMACS∗ Research Group, Vakgroep Telecommunicatie en Informatieverwerking,
+Ghent University, Sint-Pietersnieuwstraat 41, 9000 Gent, Belgium
+
+4. A. Prasetyo, “Stop-and-Wait ARQ,” Dunia Informatika,
+[Online].
+Available:
+http://duniainformatikaindonesia.blogspot.co.id/2013/03/Stop
+-and-Wait-arq.html. [Diakses 30 7 2016].
+5. S. K. D. dan N. A., “Analyzing the effect of timer timeout
+and packet length on the performance of error control
+protocols,” International Journal of Emerging Trends &
+Technology in Computer Science, vol. 1, no. 2, pp. 190-194,
+2012.
+6. E. G. Varthis dan D. I. Fotiadis, “A Comparison Of Stop-
+and-Wait And Go-Back-N ARQ Schemes For IEEE 802.11e
+Wireless Infrared Networks,” Journal of Computer
+Communications , vol. 29, no. 8, pp. 1015-1025, 2006.
+7. B. M. Khan, K. M. Kumar dan M. Dinesh, “Secured
+Multimedia File Transfer over Wireless Network Using LZW
+Algorithm,” International Journal of Advance Research in
+Computer Science and Management Studies, vol. 2, no. 7, pp.
+126-133, 2014.
+8. R. R. Bukate, P. M. Ingale dan U. S. Shid, “ARQ Strategies
+and Protocols for Relay Co-operative System,” International
+Journal For Advance Research In Engineering And
+Technology, vol. 2, no. 11, pp. 24-28, 2014.
+9. I. Ma'ruf, “Prinsip Kerja Stop-and-Wait Flow Control,”
+Blogspot,
+[Online].
+Available:
+http://irham93.blogspot.co.id/2013/06/prinsip-kerja-Stop-
+and-Wait-flow-control.html. [Diakses 30 7 2016].
+10.S. Kallel, ‘‘Analysis of a type II hybrid ARQ scheme with code combining,’’ IEEE Trans. Commun., vol. 38, no. 8, pp. 1133–1137, Aug. 1990
+
+B.Summary of the Works and limitations:
+The Stop-and-Wait Automatic Repeat Request (Stop-and-Wait ARQ), adds a simple error control mechanism to the Stop-and-Wait Protocol. Let us see how this protocol detects and corrects errors. To detect and correct corrupted frames, we need to add redundancy bits to our data frame. When the frame arrives at the receiver site, it is checked and if it is corrupted, it is silently discarded. The detection of errors in this protocol is manifested by the silence of the receiver. Lost frames are more difficult to handle than corrupted ones. In Stop-and-Wait protocols, there was no way to identify a frame. The received frame could be the correct one, or a duplicate, or a frame out of order. The solution is to number the frames. When the receiver receives a data frame that is out of order, this means that frames were either lost or duplicated. The corrupted and lost frames need to be resent in this protocol. If the receiver does not respond when there is an error, how can the sender know which frame to resend? To remedy this problem, the sender keeps a copy of the sent frame. At the same time, it starts
+a timer. If the timer expires and there is no ACK for the sent frame, the frame is resent, the copy is held, and the timer is restarted. Since the protocol uses the stop-and-wait mechanism, there is only one specific frame that needs an ACK even though several copies of the same frame can be in the network. However one limitation is absence of mechanism for handling delayed acknowledgements. After timeout on sender side, a long delayed acknowledgement might be wrongly considered as acknowledgement of some other recent packet.
+
+C. Addressing the Limitaions:
+This paper contributes to the traditional Stop-And-Wait ARQ protocol by providing additional functionality to handle delayed acknowledgements received by the receiver by checking if it is the expected acknowledement. In case it isn't, the code is implemented in such a way that it will silently discard the delayed duplicate acknowledgement and continue functioning as it would in a normal situation.
+
+
+
+
+
+3. Proposed Work:
+a. Working of the Proposed Method:
+Sender:
+Rule 1) Send one data packet at a time.
+Rule 2) Send next packet only after receiving acknowledgement for previous.
+Rule 3) If timeout occurse, send packet again.
+Rule 4) If acknowledgement is not the expected one, silently discard and function normally.
+
+Receiver:
+Rule 1) Send acknowledgement after receiving and consuming of data packet.
+Rule 2) After consuming packet acknowledgement need to be sent (Flow Control)
+Rule 3) If packet is not the expected one, silently discard and send acknowledgement for the expected one.
+
+
+b. Algorithm:
+
+Sender-side algorithm for Stop-and- Wait ARQ
+
+n=0;                              // Frame 0 should be sent first
+canSend = true;                   // Allow the first request to go
+while (true)                      // Repeat forever
+{
+WaitForEvent();                   // Sleep until an event occurs
+
+if (Event (RequestToSend) AND canSend)
+{
+Get Data () i                    
+MakeFrame (Sn) ;                 //The seqNo is Sn
+StoreFrame(Sn);                  //Keep copy
+SendFrame(Sn) ;
+StartTimerO;
+Sn = Sn + 1;
+canSend=false;
+}
+
+WaitForEvent();                         //Sleep
+
+if (Event (ArrivaINotification))        //An ACK has arrived
+{ 
+ReceiveFrame(ackNo);                    //Receive the ACK
+if(not corrupted AND ackNo!=expected)   //Discard
+{
+gently discard the frame
+}
+if(not corrupted AND ackNo==expected)   //Valid
+{
+Stoptimer{};
+PurgeFrame(Sn-1);                       //Copy is not needed
+canSend=true;
+}
+}
+
+if (Event (Timeout))                    //The timer expired
+{
+StartTimer();
+ResendFrame(Sn_l);                      //Resend a copy check
+}
+
+}
+
+
+
+Receiver-side algorithm for Stop-and- Wait ARQ
+
+n=0;                              // Frame 0 is expected first
+while (true)                      // Repeat forever
+{
+WaitForEvent();                   // Sleep until an event occurs
+
+if(Event(Arriva1Notification)     //Data frame arrives
+{
+ReceiveFrame()i
+if(corrupted(frame»i
+sleep () i
+if (seqNo == Rn)                  //Valid data frame
+{
+ExtractData();
+De1iverData()i                    //Deliver data
+Ru = Ru + 1;
+} 
+SendFrame (Rn) ;                  //Send an ACK
+}
+
+}
+
+
+
+
+
+C. Explaining the Algorithm
+
+First, all arrived data frames that are
+corrupted are ignored. If the seqNo of the frame is the one that is expected (R n ), the frame is
+accepted, the data are delivered to the network layer, and the value of R n is incremented. How-
+ever, there is one subtle point here. Even if the sequence number of the data frame does not match
+the next frame expected, an ACK is sent to the sender. This ACK, however, just reconfirms the
+previous ACK instead of confirming the frame received. This is done because the receiver
+assumes that the previous ACK might have been lost; the receiver is sending a duplicate frame.
+The resent ACK may solve the problem before the time-out does it. 
+
+
+4.Results and Analysis:
+
+A. Simulation Setup:
+Writing codes for both client and server side in Python using socket programming to implement the algorithm and see results in case of lost frames,lost acknowledgements, duplicated frames and delayed acknowledgements.
+
+B. Simulation Parameters:
+
+C. Simulation Results & Analysis:
+The simulation results including handling of the delayed akcnowledgements gracefully are shown by the outputs on client and server side.
+
+Server Output:
+
+Enter the acknowledgement number to be lost : 4
+Enter the acknowledgement number to be delayed : 6
+
+Received                --> 1:hi
+Sending Acknowledgement --> 2
+
+Received                --> 2:hello
+Sending Acknowledgement --> 3
+
+Received                --> 3:how
+Sending Acknowledgement --> 4
+Sending Acknowledgement --> 4
+
+Received                --> 4:are
+Sending Acknowledgement --> 5
+
+Received                --> 5:you
+Sending Acknowledgement --> 6
+Sending Acknowledgement --> 6
+
+Received                --> 6:iam
+Sending Acknowledgement --> 7
+
+Received                --> 7:fine
+Sending Acknowledgement --> 8
+
+Received                --> 8:you
+Sending Acknowledgement --> 9
+
+
+Client output :
+
+Enter number of words : 8
+Enter the frame data number to be lost : 2
+
+Enter the data to be sent --> hi
+Sending                   --> 1:hi
+Received Acknowledgement  --> 2
+
+Enter the data to be sent --> hello
+Sending                   --> 2:hello
+TimeOut
+Sending                   --> 2:hello
+Received Acknowledgement  --> 3
+
+Enter the data to be sent --> how
+Sending                   --> 3:how
+TimeOut
+Sending                   --> 3:how
+Received Acknowledgement  --> 4
+
+Enter the data to be sent --> are
+Sending                   --> 4:are
+Received Acknowledgement  --> 5
+
+Enter the data to be sent --> you
+Sending                   --> 5:you
+TimeOut
+Sending                   --> 5:you
+Received Acknowledgement  --> 6
+
+Enter the data to be sent --> iam
+Sending                   --> 6:iam
+Discarding the Acknowledgement 6
+Received Acknowledgement  --> 7
+
+Enter the data to be sent --> fine
+Sending                   --> 7:fine
+Received Acknowledgement  --> 8
+
+Enter the data to be sent --> you
+Sending                   --> 8:you
+Received Acknowledgement  --> 9
+
+
+
+5. Conclusion:
+The Stop-and-Wait protocol with automatic repeat request was quite efficient in handling lost packets, duplicate packets and lost acknowledgements.
+However, there was no implementation to handle delayed duplicated aknowledgements which have the potential to confuse the receiver. The same has been implemented in the above paper to make the protocol more efficient. The algorithm, its explanation, its implementation in Python along with the output have been provided along with the paper as evidence for the work.
+
+
+
+REFERENCES:
+1.BRNO UNIVERSITY OF TECHNOLOGY
+Faculty of Electrical Engineering
+and Communication
+MASTER'S THESIS
+Brno, 2017
+Bc. František Bureš
+
+2.International Journal of Engineering Trends and Technology (IJETT) – Volume 38 Number 7- August 2016 ISSN: 2231-5381               http://www.ijettjournal.org               Page 384 Stop-and-Wait ARQ Technique for RepairingFrame and Acknowledgment Transmission Zuhri Ramadhan1, Andysah Putera Utama Siahaan2 Faculty of Computer Science Universitas Pembangunan Panca Budi Jl. Jend. Gatot Subroto Km. 4,5 Sei Sikambing, 20122, Medan, Sumatera Utara, Indonesia
+
+3.Delay Analysis of the Stop-and-Wait ARQ Protocol
+over a Correlated Error Channel
+S. De Vuyst, S. Wittevrongel and H. Bruneel
+SMACS∗ Research Group, Vakgroep Telecommunicatie en Informatieverwerking,
+Ghent University, Sint-Pietersnieuwstraat 41, 9000 Gent, Belgium
+
+4. A. Prasetyo, “Stop-and-Wait ARQ,” Dunia Informatika,
+[Online].
+Available:
+http://duniainformatikaindonesia.blogspot.co.id/2013/03/Stop
+-and-Wait-arq.html. [Diakses 30 7 2016].
+5. S. K. D. dan N. A., “Analyzing the effect of timer timeout
+and packet length on the performance of error control
+protocols,” International Journal of Emerging Trends &
+Technology in Computer Science, vol. 1, no. 2, pp. 190-194,
+2012.
+6. E. G. Varthis dan D. I. Fotiadis, “A Comparison Of Stop-
+and-Wait And Go-Back-N ARQ Schemes For IEEE 802.11e
+Wireless Infrared Networks,” Journal of Computer
+Communications , vol. 29, no. 8, pp. 1015-1025, 2006.
+7. B. M. Khan, K. M. Kumar dan M. Dinesh, “Secured
+Multimedia File Transfer over Wireless Network Using LZW
+Algorithm,” International Journal of Advance Research in
+Computer Science and Management Studies, vol. 2, no. 7, pp.
+126-133, 2014.
+8. R. R. Bukate, P. M. Ingale dan U. S. Shid, “ARQ Strategies
+and Protocols for Relay Co-operative System,” International
+Journal For Advance Research In Engineering And
+Technology, vol. 2, no. 11, pp. 24-28, 2014.
+9. I. Ma'ruf, “Prinsip Kerja Stop-and-Wait Flow Control,”
+Blogspot,
+[Online].
+Available:
+http://irham93.blogspot.co.id/2013/06/prinsip-kerja-Stop-
+and-Wait-flow-control.html. [Diakses 30 7 2016].
+10. Behrouz A Forouzan Data Communication and Networks 4th edition.
+11. Behrouz A Forouzan Data Communication and Networks 5th edition.
+12. Behrouz A Forouzan TCP/IP Protocol Suite 5th edition.
+13.ELEC3030 (EL336) Computer Networks Simplex Stop and Wait Protocol- University of Southampton.
+14.GeeksForGeeks-Stop-And-Wait
+15.Performance of Cognitive Stop-and-Wait Hybrid
+Automatic Repeat Request in the Face of
+Imperfect Sensing
+ATEEQ UR REHMAN, CHEN DONG, LIE-LIANG YANG, (Fellow, IEEE),
+AND LAJOS HANZO, (Fellow, IEEE)
+School of Electronics and Computer Science, University of Southampton, Southampton SO17 1BJ, U.K.
+Corresponding author: L. Hanzo (lh@ecs.soton.ac.uk)
+ 
